@@ -3,11 +3,52 @@
 #include "hashtable.h"
 #include "ex1.h"
 
+//  struct Answer {
+//   int index_1;
+//   int index_2;
+// } Answer;
+
 Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 {
   HashTable *ht = create_hash_table(16);
+  int index_1;
+  int index_2;
 
-  // YOUR CODE HERE
+  for (int i=0; i<length; i++){
+    hash_table_insert(ht, weights[i], i);
+  }
+  for (int index=0; index<length; index++){
+    int complement = hash_table_retrieve(ht, limit - weights[index]);
+    if (complement != -1){
+      if (index > complement){
+        printf("%d, %d\n", index, complement);
+        // return Answer {index, complement};
+      } else {
+        printf("%d, %d\n", complement, index);
+        // return Answer {complement, index};
+      }
+    }
+    // printf("weight %d\n", weights[index]);
+    // printf("complement %d\n", complement);
+  }
+
+
+    // printf("starting %d\n", starting_val);
+    // int complement = hash_table_retrieve(ht, starting_val);
+    // printf("complement %d\n", complement);
+    // if ( hash_table_retrieve( ht, complement ) != NULL ) {
+    //   printf("\nhere\n");
+    //   if (starting_val > complement){
+    //     index_1 = starting_val;
+    //     index_2 = complement;
+    //     return (index_1, index_2);
+    //   } else {
+    //     index_1 = complement;
+    //     index_2 = starting_val;
+    //     return (index_1, index_2);
+    //   }
+    // }
+  // }
 
   return NULL;
 }
@@ -26,7 +67,7 @@ int main(void)
 {
 
   // TEST 1
-  int weights_1 = {9};
+  int weights_1[] = {9};
   Answer *answer_1 = get_indices_of_item_weights(&weights_1, 1, 9);
   print_answer(answer_1);  // NULL
 
@@ -44,6 +85,8 @@ int main(void)
   int weights_4[] = {12, 6, 7, 14, 19, 3, 0, 25, 40};
   Answer* answer_4 = get_indices_of_item_weights(weights_4, 9, 7);
   print_answer(answer_4);  // {6, 2}
+
+  printf("%d\n", weights_4[0]);
 
   return 0;
 }

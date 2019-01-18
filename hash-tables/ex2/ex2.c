@@ -18,6 +18,7 @@ char **reconstruct_trip(Ticket **tickets, int length)
   for (int j=1; j<length; j++){
     route[j] = hash_table_retrieve(ht, route[j-1]);
   }
+  destroy_hash_table(ht);
   return route;
 }
 
@@ -52,8 +53,10 @@ int main(void)
   ticket_3->destination = "NONE";
   tickets[2] = ticket_3;
 
-  print_route(reconstruct_trip(tickets, 3), 3); // PDX, DCA, NONE
+  char **route = reconstruct_trip(tickets, 3);
+  print_route(route, 3); // PDX, DCA, NONE
 
+  free(route);
   return 0;
 }
 #endif

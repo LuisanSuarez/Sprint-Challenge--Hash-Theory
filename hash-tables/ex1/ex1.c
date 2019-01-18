@@ -11,8 +11,8 @@
 Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 {
   HashTable *ht = create_hash_table(16);
-  int index_1;
-  int index_2;
+
+  Answer *answer = malloc(sizeof(Answer));
 
   for (int i=0; i<length; i++){
     hash_table_insert(ht, weights[i], i);
@@ -21,34 +21,18 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
     int complement = hash_table_retrieve(ht, limit - weights[index]);
     if (complement != -1){
       if (index > complement){
-        printf("%d, %d\n", index, complement);
-        // return Answer {index, complement};
+        answer->index_1 = index;
+        answer->index_2 = complement;
+        destroy_hash_table(ht);
+        return answer;
       } else {
-        printf("%d, %d\n", complement, index);
-        // return Answer {complement, index};
+        answer->index_1 = complement;
+        answer->index_2 = index;
+        destroy_hash_table(ht);
+        return answer;
       }
     }
-    // printf("weight %d\n", weights[index]);
-    // printf("complement %d\n", complement);
   }
-
-
-    // printf("starting %d\n", starting_val);
-    // int complement = hash_table_retrieve(ht, starting_val);
-    // printf("complement %d\n", complement);
-    // if ( hash_table_retrieve( ht, complement ) != NULL ) {
-    //   printf("\nhere\n");
-    //   if (starting_val > complement){
-    //     index_1 = starting_val;
-    //     index_2 = complement;
-    //     return (index_1, index_2);
-    //   } else {
-    //     index_1 = complement;
-    //     index_2 = starting_val;
-    //     return (index_1, index_2);
-    //   }
-    // }
-  // }
 
   return NULL;
 }
